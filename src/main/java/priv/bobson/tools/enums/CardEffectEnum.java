@@ -19,6 +19,7 @@ public enum CardEffectEnum {
     TOXTRICITY_VMAX("顫弦蠑螈vmax", "") {
         @Override
         public List<Object> action(LinkedList<String> handCards, Stack<String> deck, LinkedList<String> pokemons) {
+            pokemons.remove("顫弦蠑螈v");
             return pokemonEffect(handCards, deck, pokemons);
         }
     },
@@ -31,6 +32,7 @@ public enum CardEffectEnum {
     GARBODOR("灰塵山", "") {
         @Override
         public List<Object> action(LinkedList<String> handCards, Stack<String> deck, LinkedList<String> pokemons) {
+            pokemons.remove("破破袋");
             return pokemonEffect(handCards, deck, pokemons);
         }
     },
@@ -43,6 +45,7 @@ public enum CardEffectEnum {
     DRAGALGE("毒藻龍", "") {
         @Override
         public List<Object> action(LinkedList<String> handCards, Stack<String> deck, LinkedList<String> pokemons) {
+            pokemons.remove("垃垃藻");
             return pokemonEffect(handCards, deck, pokemons);
         }
     },
@@ -62,6 +65,7 @@ public enum CardEffectEnum {
             boolean isNotExist = true;
             while (isNotExist) {
                 Scanner scanner = new Scanner(System.in);
+                System.out.print("棄一張手牌 : ");
                 String inputString = scanner.nextLine();
                 if (handCards.contains(inputString)) {
                     handCards.remove(this.getName());
@@ -75,6 +79,7 @@ public enum CardEffectEnum {
             isNotExist = true;
             while (isNotExist) {
                 Scanner scanner = new Scanner(System.in);
+                System.out.print("選擇一張基礎PM : ");
                 String inputString = scanner.nextLine();
                 if (deck.contains(inputString)) {
                     deck.remove(inputString);
@@ -94,6 +99,7 @@ public enum CardEffectEnum {
             boolean isNotExist = true;
             while (isNotExist) {
                 Scanner scanner = new Scanner(System.in);
+                System.out.print("選擇一張牌庫的基礎PM : ");
                 String inputString = scanner.nextLine();
                 if (deck.contains(inputString)) {
                     handCards.remove(this.getName());
@@ -114,8 +120,10 @@ public enum CardEffectEnum {
             boolean isNotExist = true;
             while (isNotExist) {
                 Scanner scanner = new Scanner(System.in);
+                System.out.print("選擇手牌一張PM : ");
                 String inputString = scanner.nextLine();
                 if (handCards.contains(inputString)) {
+                    handCards.remove(this.getName());
                     handCards.remove(inputString);
                     deck.push(inputString);
                     isNotExist = false;
@@ -127,6 +135,7 @@ public enum CardEffectEnum {
             isNotExist = true;
             while (isNotExist) {
                 Scanner scanner = new Scanner(System.in);
+                System.out.print("選擇牌庫一張PM : ");
                 String inputString = scanner.nextLine();
                 if (deck.contains(inputString)) {
                     deck.remove(inputString);
@@ -146,6 +155,7 @@ public enum CardEffectEnum {
             boolean isNotExist = true;
             while (isNotExist) {
                 Scanner scanner = new Scanner(System.in);
+                System.out.print("選擇牌庫一張進化PM : ");
                 String inputString = scanner.nextLine();
                 if (deck.contains(inputString)) {
                     handCards.remove(this.getName());
@@ -207,6 +217,7 @@ public enum CardEffectEnum {
             for (int i = 0; i < 3; i++) {
                 handCards.push(deck.pop());
             }
+            handCards.remove(this.getName());
             return returnAll(handCards, deck, pokemons);
         }
     },
@@ -228,10 +239,26 @@ public enum CardEffectEnum {
             return energyEffect(handCards, deck, pokemons);
         }
     },
-    SPEED_L_ENERGY("特電", "") {
+    SPEED_L_ENERGY("高速電能", "") {
         @Override
         public List<Object> action(LinkedList<String> handCards, Stack<String> deck, LinkedList<String> pokemons) {
-            return energyEffect(handCards, deck, pokemons);
+            boolean isNotExist = true;
+            while (isNotExist) {
+                Scanner scanner = new Scanner(System.in);
+                System.out.print("選擇場上一隻PM : ");
+                String inputString = scanner.nextLine();
+                if (pokemons.contains(inputString)) {
+                    handCards.remove(this.getName());
+                    pokemons.add(this.getName() + "〔" + inputString + "〕");
+                    isNotExist = false;
+                } else {
+                    System.out.println(pokemons + "\n場上沒有此卡，請重新輸入");
+                }
+            }
+            for (int i = 0; i < 2; i++) {
+                handCards.add(deck.pop());
+            }
+            return returnAll(handCards, deck, pokemons);
         }
     },
     UNIT_ENERGY_LPM("單位能量", "") {
@@ -287,6 +314,7 @@ public enum CardEffectEnum {
         boolean isNotExist = true;
         while (isNotExist) {
             Scanner scanner = new Scanner(System.in);
+            System.out.print("選擇場上一隻PM : ");
             String inputString = scanner.nextLine();
             if (pokemons.contains(inputString)) {
                 handCards.remove(this.getName());

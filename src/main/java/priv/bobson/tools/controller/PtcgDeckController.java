@@ -24,6 +24,11 @@ public class PtcgDeckController {
 
 
     static int round = 1;
+    static boolean isFirstEnergy = false;
+    static boolean isUsedSupporter = false;
+    static String area = "無";
+
+
     static int all = 0;
     static int has = 0;
 
@@ -31,7 +36,7 @@ public class PtcgDeckController {
     static {
         //pm - 18
         DECK.put("顫弦蠑螈v", 3);
-        DECK.put("顫弦蠑螈vamx", 2);
+        DECK.put("顫弦蠑螈vmax", 2);
         DECK.put("破破袋", 3);
         DECK.put("灰塵山", 3);
         DECK.put("垃垃藻", 3);
@@ -59,9 +64,9 @@ public class PtcgDeckController {
         DECK.put("老大", 1);
 
         //能量 - 14
-        DECK.put("電能", 6);
-        DECK.put("特電", 4);
-        DECK.put("單位能量", 2);
+        DECK.put("電能", 4);
+        DECK.put("高速電能", 4);
+        DECK.put("單位能量", 4);
         DECK.put("超能", 2);
     }
 
@@ -87,26 +92,44 @@ public class PtcgDeckController {
 
         boolean next = true;
         while (next) {
-            System.out.println("\n第" + round + "回合，請使用手牌");
+            System.out.println("\n【第" + round + "回合】 - 首填:" + isFirstEnergy + "  支援者:" + isUsedSupporter
+                    + "  場地:" + area);
             Scanner scanner = new Scanner(System.in);
+            System.out.print("使用手牌 : ");
             String inputString = scanner.nextLine();
             if ("exit".equals(inputString)) {
                 System.out.println("測試結束");
                 return;
-            } else if ("next".equals(inputString)) {
+            } else if ("n".equals(inputString)) {
                 round++;
+                isFirstEnergy = false;
+                isUsedSupporter = false;
+                System.out.println("==========================================================");
+                System.out.println("\n當前場上 : " + pokemons);
                 drawCards(1);
                 continue;
+            } else if (inputString.contains("能")) {
+                isFirstEnergy = true;
+            } else if (inputString.equals("竹蘭") || inputString.equals("老大")
+                    || inputString.equals("博士") || inputString.equals("養鳥人")) {
+                isUsedSupporter = true;
+            } else if (inputString.equals("雷霆山") || inputString.equals("礦山")) {
+                area = inputString;
             }
+
+
             CardEffectEnum cee = CardEffectEnum.getByName(inputString);
             if (cee == null) {
-                System.out.println("手牌沒有此卡，請重新輸入\n" + handCards);
+                System.out.println("手牌沒有此卡，請重新輸入");
+                System.out.println("==========================================================");
+                System.out.println("\n當前場上 : " + pokemons + "\n當前手牌 : " + handCards);
             } else {
                 List<Object> result = cee.action(handCards, deck, pokemons);
                 handCards = (LinkedList<String>) result.get(0);
                 deck = (Stack<String>) result.get(1);
                 pokemons = (LinkedList<String>) result.get(2);
-                System.out.println("\n\n\n當前場上 : " + pokemons);
+                System.out.println("==========================================================");
+                System.out.println("\n當前場上 : " + pokemons);
                 System.out.println("當前手牌 : " + handCards);
             }
 
@@ -146,7 +169,7 @@ public class PtcgDeckController {
         for (int i = 0; i < 6; i++) {
             prizeCards.push(deck.pop());
         }
-        System.out.println("獎勵卡 : " + prizeCards + "\n");
+        System.out.println("獎勵卡 : " + prizeCards);
     }
 
     /**

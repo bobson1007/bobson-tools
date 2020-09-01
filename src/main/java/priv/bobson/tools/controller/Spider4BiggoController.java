@@ -22,7 +22,7 @@ public class Spider4BiggoController {
 
     public static void main(String[] args) {
         map1 = Spider4BiggoController.loop4All("PTCG 毒藻龍");
-        map2 = Spider4BiggoController.loop4All("PTCG 單位能量");
+        map2 = Spider4BiggoController.loop4All("PTCG 巢穴球");
         map2.forEach((key, value) -> {
             if (map1.containsKey(key)) {
                 printDetail(key);
