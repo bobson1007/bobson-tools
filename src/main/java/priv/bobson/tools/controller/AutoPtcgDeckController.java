@@ -92,7 +92,7 @@ public class AutoPtcgDeckController {
                     return;
                 }
                 drawCards(7);
-                ruleCheck("");
+                ruleCheck();
             }
         }
 
@@ -104,17 +104,63 @@ public class AutoPtcgDeckController {
      * @param inputString 鍵盤輸入使用的牌
      * @return 是否可以使用
      */
-    private static boolean ruleCheck(String inputString) {
-        LinkedList<CardEffectEnum> handCards = AutoPtcgDeckController.handCards;
+    private static void ruleCheck() {
+        while (deck.size() > 0) {
+            sortHandCards();
+            System.out.println("\n【第" + round + "回合】 - 首填:" + isFirstEnergy + "  支援者:" + isUsedSupporter
+                    + "  場地:" + area);
+            System.out.print("使用手牌 : " + handCards.get(0).getName());
+            String inputString = handCards.get(0).getName();
+            if ("exit".equals(inputString)) {
+                System.out.println("測試結束");
+                return;
+            } else if ("n".equals(inputString)) {
+                round++;
+                isFirstEnergy = false;
+                isUsedSupporter = false;
+                System.out.println("==========================================================");
+                System.out.println("\n當前場上 : " + pokemons);
+                drawCards(1);
+                continue;
+            } else if (inputString.contains("能")) {
+                isFirstEnergy = true;
+            } else if ("竹蘭".equals(inputString) || "老大".equals(inputString)
+                    || "博士".equals(inputString) || "養鳥人".equals(inputString)) {
+                isUsedSupporter = true;
+            } else if ("雷霆山".equals(inputString) || "礦山".equals(inputString)) {
+                area = inputString;
+            }
 
+            CardEffectEnum cee = CardEffectEnum.getByName(inputString);
+            if (cee == null) {
+                System.out.println("手牌沒有此卡，請重新輸入");
+                System.out.println("==========================================================");
+                System.out.println("\n當前場上 : " + pokemons);
+                System.out.println("場上能量 : " + energys);
+                System.out.println("當前手牌 : " + handCards);
+            } else {
+                List<Object> result = cee.action(handCards, deck, pokemons, energys);
+                handCards = (LinkedList<CardEffectEnum>) result.get(0);
+                deck = (Stack<CardEffectEnum>) result.get(1);
+                pokemons = (LinkedList<CardEffectEnum>) result.get(2);
+                energys = (LinkedList<List<CardEffectEnum>>) result.get(3);
+                System.out.println("==========================================================");
+                System.out.println("\n當前場上 : " + pokemons);
+                System.out.println("場上能量 : " + energys);
+                System.out.println("當前手牌 : " + handCards);
+            }
+
+        }
+    }
+
+    private static void sortHandCards(){
         handCards.sort(new Comparator<CardEffectEnum>() {
             @Override
             public int compare(CardEffectEnum o1, CardEffectEnum o2) {
                 return o1.getType().charAt(0) - o2.getType().charAt(0);
             }
         });
-        System.out.println("=======>" + handCards);
-        return true;
+        System.out.println("排序後 =======> " + handCards);
     }
 
     /**
