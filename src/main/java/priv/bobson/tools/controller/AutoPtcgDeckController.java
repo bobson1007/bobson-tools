@@ -4,7 +4,7 @@ import priv.bobson.tools.enums.CardEffectEnum;
 
 import java.util.*;
 
-public class PtcgDeckController {
+public class AutoPtcgDeckController {
 
     /* 卡組 */
     private final static Map<String, Integer> DECK = new HashMap<String, Integer>();
@@ -72,8 +72,10 @@ public class PtcgDeckController {
         DECK.put("超能", 3);
     }
 
+
     /**
-     * 手動模擬出牌流程
+     * 自動化
+     *
      * @param args
      */
     public static void main(String[] args) {
@@ -90,56 +92,10 @@ public class PtcgDeckController {
                     return;
                 }
                 drawCards(7);
+                ruleCheck("");
             }
         }
 
-        while (deck.size() > 0) {
-            System.out.println("\n【第" + round + "回合】 - 首填:" + isFirstEnergy + "  支援者:" + isUsedSupporter
-                    + "  場地:" + area);
-            Scanner scanner = new Scanner(System.in);
-            System.out.print("使用手牌 : ");
-            String inputString = scanner.nextLine();
-            if ("exit".equals(inputString)) {
-                System.out.println("測試結束");
-                return;
-            } else if ("n".equals(inputString)) {
-                round++;
-                isFirstEnergy = false;
-                isUsedSupporter = false;
-                System.out.println("==========================================================");
-                System.out.println("\n當前場上 : " + pokemons);
-                drawCards(1);
-                continue;
-            } else if (inputString.contains("能")) {
-                isFirstEnergy = true;
-            } else if ("竹蘭".equals(inputString) || "老大".equals(inputString)
-                    || "博士".equals(inputString) || "養鳥人".equals(inputString)) {
-                isUsedSupporter = true;
-            } else if ("雷霆山".equals(inputString) || "礦山".equals(inputString)) {
-                area = inputString;
-            }
-
-
-            CardEffectEnum cee = CardEffectEnum.getByName(inputString);
-            if (cee == null) {
-                System.out.println("手牌沒有此卡，請重新輸入");
-                System.out.println("==========================================================");
-                System.out.println("\n當前場上 : " + pokemons);
-                System.out.println("場上能量 : " + energys);
-                System.out.println("當前手牌 : " + handCards);
-            } else {
-                List<Object> result = cee.action(handCards, deck, pokemons, energys);
-                handCards = (LinkedList<CardEffectEnum>) result.get(0);
-                deck = (Stack<CardEffectEnum>) result.get(1);
-                pokemons = (LinkedList<CardEffectEnum>) result.get(2);
-                energys = (LinkedList<List<CardEffectEnum>>) result.get(3);
-                System.out.println("==========================================================");
-                System.out.println("\n當前場上 : " + pokemons);
-                System.out.println("場上能量 : " + energys);
-                System.out.println("當前手牌 : " + handCards);
-            }
-
-        }
     }
 
     /**
@@ -149,7 +105,7 @@ public class PtcgDeckController {
      * @return 是否可以使用
      */
     private static boolean ruleCheck(String inputString) {
-        LinkedList<CardEffectEnum> handCards = PtcgDeckController.handCards;
+        LinkedList<CardEffectEnum> handCards = AutoPtcgDeckController.handCards;
 
         handCards.sort(new Comparator<CardEffectEnum>() {
             @Override
