@@ -1,6 +1,7 @@
 package priv.bobson.tools.enums;
 
 import lombok.Data;
+import org.springframework.util.StringUtils;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -10,66 +11,92 @@ public enum CardEffectEnum {
     /**
      * pm
      */
-    TOXTRICITY_V("顫弦蠑螈v", "") {
+    TOXTRICITY_V("顫弦蠑螈v", "PM-0") {
         @Override
-        public List<Object> action(LinkedList<String> handCards, Stack<String> deck, LinkedList<String> pokemons) {
-            return pokemonEffect(handCards, deck, pokemons);
+        public List<Object> action(LinkedList<CardEffectEnum> handCards, Stack<CardEffectEnum> deck, LinkedList<CardEffectEnum> pokemons, LinkedList<List<CardEffectEnum>> energys) {
+            pokemons.add(this);
+            energys.add(new ArrayList<>());
+            return pokemonEffect(handCards, deck, pokemons, energys);
         }
     },
-    TOXTRICITY_VMAX("顫弦蠑螈vmax", "") {
+    TOXTRICITY_VMAX("顫弦蠑螈vmax", "PM-1") {
         @Override
-        public List<Object> action(LinkedList<String> handCards, Stack<String> deck, LinkedList<String> pokemons) {
-            pokemons.remove("顫弦蠑螈v");
-            return pokemonEffect(handCards, deck, pokemons);
+        public List<Object> action(LinkedList<CardEffectEnum> handCards, Stack<CardEffectEnum> deck, LinkedList<CardEffectEnum> pokemons, LinkedList<List<CardEffectEnum>> energys) {
+            for (int i = 0; i < pokemons.size(); i++) {
+                if ("顫弦蠑螈v".equals(pokemons.get(i).getName())) {
+                    pokemons.remove(i);
+                    pokemons.add(i, this);
+                    break;
+                }
+            }
+            return pokemonEffect(handCards, deck, pokemons, energys);
         }
     },
-    TRUBBISH("破破袋", "") {
+    TRUBBISH("破破袋", "PM-0") {
         @Override
-        public List<Object> action(LinkedList<String> handCards, Stack<String> deck, LinkedList<String> pokemons) {
-            return pokemonEffect(handCards, deck, pokemons);
+        public List<Object> action(LinkedList<CardEffectEnum> handCards, Stack<CardEffectEnum> deck, LinkedList<CardEffectEnum> pokemons, LinkedList<List<CardEffectEnum>> energys) {
+            pokemons.add(this);
+            energys.add(new ArrayList<>());
+            return pokemonEffect(handCards, deck, pokemons, energys);
         }
     },
-    GARBODOR("灰塵山", "") {
+    GARBODOR("灰塵山", "PM-1") {
         @Override
-        public List<Object> action(LinkedList<String> handCards, Stack<String> deck, LinkedList<String> pokemons) {
-            pokemons.remove("破破袋");
-            return pokemonEffect(handCards, deck, pokemons);
+        public List<Object> action(LinkedList<CardEffectEnum> handCards, Stack<CardEffectEnum> deck, LinkedList<CardEffectEnum> pokemons, LinkedList<List<CardEffectEnum>> energys) {
+            for (int i = 0; i < pokemons.size(); i++) {
+                if ("破破袋".equals(pokemons.get(i).getName())) {
+                    pokemons.remove(i);
+                    pokemons.add(i, this);
+                    break;
+                }
+            }
+            return pokemonEffect(handCards, deck, pokemons, energys);
         }
     },
-    SKRELP("垃垃藻", "") {
+    SKRELP("垃垃藻", "PM-0") {
         @Override
-        public List<Object> action(LinkedList<String> handCards, Stack<String> deck, LinkedList<String> pokemons) {
-            return pokemonEffect(handCards, deck, pokemons);
+        public List<Object> action(LinkedList<CardEffectEnum> handCards, Stack<CardEffectEnum> deck, LinkedList<CardEffectEnum> pokemons, LinkedList<List<CardEffectEnum>> energys) {
+            pokemons.add(this);
+            energys.add(new ArrayList<>());
+            return pokemonEffect(handCards, deck, pokemons, energys);
         }
     },
-    DRAGALGE("毒藻龍", "") {
+    DRAGALGE("毒藻龍", "PM-1") {
         @Override
-        public List<Object> action(LinkedList<String> handCards, Stack<String> deck, LinkedList<String> pokemons) {
-            pokemons.remove("垃垃藻");
-            return pokemonEffect(handCards, deck, pokemons);
+        public List<Object> action(LinkedList<CardEffectEnum> handCards, Stack<CardEffectEnum> deck, LinkedList<CardEffectEnum> pokemons, LinkedList<List<CardEffectEnum>> energys) {
+            for (int i = 0; i < pokemons.size(); i++) {
+                if ("垃垃藻".equals(pokemons.get(i).getName())) {
+                    pokemons.remove(i);
+                    pokemons.add(i, this);
+                    break;
+                }
+            }
+            return pokemonEffect(handCards, deck, pokemons, energys);
         }
     },
-    ZERAORA_GX("捷拉奧拉GX", "") {
+    ZERAORA_GX("捷拉奧拉GX", "PM-0") {
         @Override
-        public List<Object> action(LinkedList<String> handCards, Stack<String> deck, LinkedList<String> pokemons) {
-            return pokemonEffect(handCards, deck, pokemons);
+        public List<Object> action(LinkedList<CardEffectEnum> handCards, Stack<CardEffectEnum> deck, LinkedList<CardEffectEnum> pokemons, LinkedList<List<CardEffectEnum>> energys) {
+            pokemons.add(this);
+            energys.add(new ArrayList<>());
+            return pokemonEffect(handCards, deck, pokemons, energys);
         }
     },
 
     /**
      * 物品
      */
-    QUICK_BALL("先機球", "") {
+    QUICK_BALL("先機球", "物品") {
         @Override
-        public List<Object> action(LinkedList<String> handCards, Stack<String> deck, LinkedList<String> pokemons) {
+        public List<Object> action(LinkedList<CardEffectEnum> handCards, Stack<CardEffectEnum> deck, LinkedList<CardEffectEnum> pokemons, LinkedList<List<CardEffectEnum>> energys) {
             boolean isNotExist = true;
             while (isNotExist) {
                 Scanner scanner = new Scanner(System.in);
                 System.out.print("棄一張手牌 : ");
                 String inputString = scanner.nextLine();
-                if (handCards.contains(inputString)) {
-                    handCards.remove(this.getName());
-                    handCards.remove(inputString);
+                if (handCards.contains(CardEffectEnum.getByName(inputString))) {
+                    handCards.remove(CardEffectEnum.getByName(this.getName()));
+                    handCards.remove(CardEffectEnum.getByName(inputString));
                     isNotExist = false;
                 } else {
                     System.out.println(handCards + "\n手牌沒有此卡，請重新輸入");
@@ -81,51 +108,52 @@ public enum CardEffectEnum {
                 Scanner scanner = new Scanner(System.in);
                 System.out.print("選擇一張基礎PM : ");
                 String inputString = scanner.nextLine();
-                if (deck.contains(inputString)) {
-                    deck.remove(inputString);
-                    handCards.add(inputString);
+                if (deck.contains(CardEffectEnum.getByName(inputString))) {
+                    deck.remove(CardEffectEnum.getByName(inputString));
+                    handCards.add(CardEffectEnum.getByName(inputString));
                     Collections.shuffle(deck);
                     isNotExist = false;
                 } else {
                     System.out.println(deck + "\n牌堆沒有此卡，請重新輸入");
                 }
             }
-            return returnAll(handCards, deck, pokemons);
+            return returnAll(handCards, deck, pokemons, energys);
         }
     },
-    NEST_BALL("巢穴球", "") {
+    NEST_BALL("巢穴球", "物品") {
         @Override
-        public List<Object> action(LinkedList<String> handCards, Stack<String> deck, LinkedList<String> pokemons) {
+        public List<Object> action(LinkedList<CardEffectEnum> handCards, Stack<CardEffectEnum> deck, LinkedList<CardEffectEnum> pokemons, LinkedList<List<CardEffectEnum>> energys) {
             boolean isNotExist = true;
             while (isNotExist) {
                 Scanner scanner = new Scanner(System.in);
                 System.out.print("選擇一張牌庫的基礎PM : ");
                 String inputString = scanner.nextLine();
-                if (deck.contains(inputString)) {
-                    handCards.remove(this.getName());
-                    deck.remove(inputString);
-                    pokemons.add(inputString);
+                if (deck.contains(CardEffectEnum.getByName(inputString))) {
+                    handCards.remove(CardEffectEnum.getByName(this.getName()));
+                    deck.remove(CardEffectEnum.getByName(inputString));
+                    pokemons.add(CardEffectEnum.getByName(inputString));
+                    energys.add(new ArrayList<>());
                     Collections.shuffle(deck);
                     isNotExist = false;
                 } else {
                     System.out.println(deck + "\n牌堆沒有此卡，請重新輸入");
                 }
             }
-            return returnAll(handCards, deck, pokemons);
+            return returnAll(handCards, deck, pokemons, energys);
         }
     },
-    POKEMON_COMMUBICATION("通信", "") {
+    POKEMON_COMMUBICATION("通信", "物品") {
         @Override
-        public List<Object> action(LinkedList<String> handCards, Stack<String> deck, LinkedList<String> pokemons) {
+        public List<Object> action(LinkedList<CardEffectEnum> handCards, Stack<CardEffectEnum> deck, LinkedList<CardEffectEnum> pokemons, LinkedList<List<CardEffectEnum>> energys) {
             boolean isNotExist = true;
             while (isNotExist) {
                 Scanner scanner = new Scanner(System.in);
                 System.out.print("選擇手牌一張PM : ");
                 String inputString = scanner.nextLine();
-                if (handCards.contains(inputString)) {
-                    handCards.remove(this.getName());
-                    handCards.remove(inputString);
-                    deck.push(inputString);
+                if (handCards.contains(CardEffectEnum.getByName(inputString))) {
+                    handCards.remove(CardEffectEnum.getByName(this.getName()));
+                    handCards.remove(CardEffectEnum.getByName(inputString));
+                    deck.push(CardEffectEnum.getByName(inputString));
                     isNotExist = false;
                 } else {
                     System.out.println(handCards + "\n手牌沒有此卡，請重新輸入");
@@ -137,51 +165,51 @@ public enum CardEffectEnum {
                 Scanner scanner = new Scanner(System.in);
                 System.out.print("選擇牌庫一張PM : ");
                 String inputString = scanner.nextLine();
-                if (deck.contains(inputString)) {
-                    deck.remove(inputString);
-                    handCards.add(inputString);
+                if (deck.contains(CardEffectEnum.getByName(inputString))) {
+                    deck.remove(CardEffectEnum.getByName(inputString));
+                    handCards.add(CardEffectEnum.getByName(inputString));
                     Collections.shuffle(deck);
                     isNotExist = false;
                 } else {
                     System.out.println(deck + "\n牌堆沒有此卡，請重新輸入");
                 }
             }
-            return returnAll(handCards, deck, pokemons);
+            return returnAll(handCards, deck, pokemons, energys);
         }
     },
-    EVOLUTION_INCENSE("薰香", "") {
+    EVOLUTION_INCENSE("薰香", "物品") {
         @Override
-        public List<Object> action(LinkedList<String> handCards, Stack<String> deck, LinkedList<String> pokemons) {
+        public List<Object> action(LinkedList<CardEffectEnum> handCards, Stack<CardEffectEnum> deck, LinkedList<CardEffectEnum> pokemons, LinkedList<List<CardEffectEnum>> energys) {
             boolean isNotExist = true;
             while (isNotExist) {
                 Scanner scanner = new Scanner(System.in);
                 System.out.print("選擇牌庫一張進化PM : ");
                 String inputString = scanner.nextLine();
-                if (deck.contains(inputString)) {
-                    handCards.remove(this.getName());
-                    deck.remove(inputString);
-                    handCards.add(inputString);
+                if (deck.contains(CardEffectEnum.getByName(inputString))) {
+                    handCards.remove(CardEffectEnum.getByName(this.getName()));
+                    deck.remove(CardEffectEnum.getByName(inputString));
+                    handCards.add(CardEffectEnum.getByName(inputString));
                     Collections.shuffle(deck);
                     isNotExist = false;
                 } else {
                     System.out.println(deck + "\n牌堆沒有此卡，請重新輸入");
                 }
             }
-            return returnAll(handCards, deck, pokemons);
+            return returnAll(handCards, deck, pokemons, energys);
         }
     },
-    RESET_STAMP("印章", "") {
+    RESET_STAMP("印章", "物品") {
         @Override
-        public List<Object> action(LinkedList<String> handCards, Stack<String> deck, LinkedList<String> pokemons) {
-            handCards.remove(this.getName());
-            return returnAll(handCards, deck, pokemons);
+        public List<Object> action(LinkedList<CardEffectEnum> handCards, Stack<CardEffectEnum> deck, LinkedList<CardEffectEnum> pokemons, LinkedList<List<CardEffectEnum>> energys) {
+            handCards.remove(CardEffectEnum.getByName(this.getName()));
+            return returnAll(handCards, deck, pokemons, energys);
         }
     },
-    FIELD_BLOWER("吹風機", "") {
+    FIELD_BLOWER("吹風機", "物品") {
         @Override
-        public List<Object> action(LinkedList<String> handCards, Stack<String> deck, LinkedList<String> pokemons) {
-            handCards.remove(this.getName());
-            return returnAll(handCards, deck, pokemons);
+        public List<Object> action(LinkedList<CardEffectEnum> handCards, Stack<CardEffectEnum> deck, LinkedList<CardEffectEnum> pokemons, LinkedList<List<CardEffectEnum>> energys) {
+            handCards.remove(CardEffectEnum.getByName(this.getName()));
+            return returnAll(handCards, deck, pokemons, energys);
         }
     },
 
@@ -189,43 +217,43 @@ public enum CardEffectEnum {
     /**
      * 人物
      */
-    PROFESSORS_RESEARCH("博士", "") {
+    PROFESSORS_RESEARCH("博士", "人物") {
         @Override
-        public List<Object> action(LinkedList<String> handCards, Stack<String> deck, LinkedList<String> pokemons) {
+        public List<Object> action(LinkedList<CardEffectEnum> handCards, Stack<CardEffectEnum> deck, LinkedList<CardEffectEnum> pokemons, LinkedList<List<CardEffectEnum>> energys) {
             handCards.clear();
             for (int i = 0; i < 7; i++) {
                 handCards.push(deck.pop());
             }
-            return returnAll(handCards, deck, pokemons);
+            return returnAll(handCards, deck, pokemons, energys);
         }
     },
-    CYNTHIA("竹蘭", "") {
+    CYNTHIA("竹蘭", "人物") {
         @Override
-        public List<Object> action(LinkedList<String> handCards, Stack<String> deck, LinkedList<String> pokemons) {
+        public List<Object> action(LinkedList<CardEffectEnum> handCards, Stack<CardEffectEnum> deck, LinkedList<CardEffectEnum> pokemons, LinkedList<List<CardEffectEnum>> energys) {
             handCards.forEach(deck::push);
             handCards.clear();
             Collections.shuffle(deck);
             for (int i = 0; i < 6; i++) {
                 handCards.push(deck.pop());
             }
-            return returnAll(handCards, deck, pokemons);
+            return returnAll(handCards, deck, pokemons, energys);
         }
     },
-    BIRDMAN("養鳥人", "") {
+    BIRDMAN("養鳥人", "人物") {
         @Override
-        public List<Object> action(LinkedList<String> handCards, Stack<String> deck, LinkedList<String> pokemons) {
+        public List<Object> action(LinkedList<CardEffectEnum> handCards, Stack<CardEffectEnum> deck, LinkedList<CardEffectEnum> pokemons, LinkedList<List<CardEffectEnum>> energys) {
             for (int i = 0; i < 3; i++) {
                 handCards.push(deck.pop());
             }
-            handCards.remove(this.getName());
-            return returnAll(handCards, deck, pokemons);
+            handCards.remove(CardEffectEnum.getByName(this.getName()));
+            return returnAll(handCards, deck, pokemons, energys);
         }
     },
-    BOSSS_ORDERS("老大", "") {
+    BOSSS_ORDERS("老大", "人物") {
         @Override
-        public List<Object> action(LinkedList<String> handCards, Stack<String> deck, LinkedList<String> pokemons) {
-            handCards.remove(this.getName());
-            return returnAll(handCards, deck, pokemons);
+        public List<Object> action(LinkedList<CardEffectEnum> handCards, Stack<CardEffectEnum> deck, LinkedList<CardEffectEnum> pokemons, LinkedList<List<CardEffectEnum>> energys) {
+            handCards.remove(CardEffectEnum.getByName(this.getName()));
+            return returnAll(handCards, deck, pokemons, energys);
         }
     },
 
@@ -233,23 +261,27 @@ public enum CardEffectEnum {
     /**
      * 能量
      */
-    LIGBTNING_ENGERGY("電能", "") {
+    LIGBTNING_ENGERGY("電能", "能量") {
         @Override
-        public List<Object> action(LinkedList<String> handCards, Stack<String> deck, LinkedList<String> pokemons) {
-            return energyEffect(handCards, deck, pokemons);
+        public List<Object> action(LinkedList<CardEffectEnum> handCards, Stack<CardEffectEnum> deck, LinkedList<CardEffectEnum> pokemons, LinkedList<List<CardEffectEnum>> energys) {
+            return energyEffect(handCards, deck, pokemons, energys);
         }
     },
-    SPEED_L_ENERGY("高速電能", "") {
+    SPEED_L_ENERGY("高速電能", "能量") {
         @Override
-        public List<Object> action(LinkedList<String> handCards, Stack<String> deck, LinkedList<String> pokemons) {
+        public List<Object> action(LinkedList<CardEffectEnum> handCards, Stack<CardEffectEnum> deck, LinkedList<CardEffectEnum> pokemons, LinkedList<List<CardEffectEnum>> energys) {
             boolean isNotExist = true;
             while (isNotExist) {
                 Scanner scanner = new Scanner(System.in);
                 System.out.print("選擇場上一隻PM : ");
-                String inputString = scanner.nextLine();
-                if (pokemons.contains(inputString)) {
-                    handCards.remove(this.getName());
-                    pokemons.add(this.getName() + "〔" + inputString + "〕");
+                for (int i = 0; i < pokemons.size(); i++) {
+                    System.out.print(i + "-" + pokemons.get(i).getName() + " ");
+                }
+                System.out.print("\n輸入序號 : ");
+                int inputInteger = Integer.parseInt(scanner.nextLine());
+                if (inputInteger < pokemons.size()) {
+                    handCards.remove(CardEffectEnum.getByName(this.getName()));
+                    energys.get(inputInteger).add(CardEffectEnum.getByName(this.getName()));
                     isNotExist = false;
                 } else {
                     System.out.println(pokemons + "\n場上沒有此卡，請重新輸入");
@@ -258,19 +290,19 @@ public enum CardEffectEnum {
             for (int i = 0; i < 2; i++) {
                 handCards.add(deck.pop());
             }
-            return returnAll(handCards, deck, pokemons);
+            return returnAll(handCards, deck, pokemons, energys);
         }
     },
-    UNIT_ENERGY_LPM("單位能量", "") {
+    UNIT_ENERGY_LPM("單位能量", "能量") {
         @Override
-        public List<Object> action(LinkedList<String> handCards, Stack<String> deck, LinkedList<String> pokemons) {
-            return energyEffect(handCards, deck, pokemons);
+        public List<Object> action(LinkedList<CardEffectEnum> handCards, Stack<CardEffectEnum> deck, LinkedList<CardEffectEnum> pokemons, LinkedList<List<CardEffectEnum>> energys) {
+            return energyEffect(handCards, deck, pokemons, energys);
         }
     },
-    PSYCHIC_ENERGY("超能", "") {
+    PSYCHIC_ENERGY("超能", "能量") {
         @Override
-        public List<Object> action(LinkedList<String> handCards, Stack<String> deck, LinkedList<String> pokemons) {
-            return energyEffect(handCards, deck, pokemons);
+        public List<Object> action(LinkedList<CardEffectEnum> handCards, Stack<CardEffectEnum> deck, LinkedList<CardEffectEnum> pokemons, LinkedList<List<CardEffectEnum>> energys) {
+            return energyEffect(handCards, deck, pokemons, energys);
         }
     },
 
@@ -278,18 +310,18 @@ public enum CardEffectEnum {
     /**
      * 場地
      */
-    THUNDER_MOUNTAIN("雷霆山", "") {
+    THUNDER_MOUNTAIN("雷霆山", "場地") {
         @Override
-        public List<Object> action(LinkedList<String> handCards, Stack<String> deck, LinkedList<String> pokemons) {
-            handCards.remove(this.getName());
-            return returnAll(handCards, deck, pokemons);
+        public List<Object> action(LinkedList<CardEffectEnum> handCards, Stack<CardEffectEnum> deck, LinkedList<CardEffectEnum> pokemons, LinkedList<List<CardEffectEnum>> energys) {
+            handCards.remove(CardEffectEnum.getByName(this.getName()));
+            return returnAll(handCards, deck, pokemons, energys);
         }
     },
-    GALAR_MINE("礦山", "") {
+    GALAR_MINE("礦山", "場地") {
         @Override
-        public List<Object> action(LinkedList<String> handCards, Stack<String> deck, LinkedList<String> pokemons) {
-            handCards.remove(this.getName());
-            return returnAll(handCards, deck, pokemons);
+        public List<Object> action(LinkedList<CardEffectEnum> handCards, Stack<CardEffectEnum> deck, LinkedList<CardEffectEnum> pokemons, LinkedList<List<CardEffectEnum>> energys) {
+            handCards.remove(CardEffectEnum.getByName(this.getName()));
+            return returnAll(handCards, deck, pokemons, energys);
         }
     },
 
@@ -300,49 +332,52 @@ public enum CardEffectEnum {
 
 
     ;
-
-
     private String name;
     private String type;
+
 
     CardEffectEnum(String name, String type) {
         this.name = name;
         this.type = type;
     }
 
-    public List<Object> energyEffect(LinkedList<String> handCards, Stack<String> deck, LinkedList<String> pokemons) {
+    public List<Object> energyEffect(LinkedList<CardEffectEnum> handCards, Stack<CardEffectEnum> deck, LinkedList<CardEffectEnum> pokemons, LinkedList<List<CardEffectEnum>> energys) {
         boolean isNotExist = true;
         while (isNotExist) {
             Scanner scanner = new Scanner(System.in);
             System.out.print("選擇場上一隻PM : ");
-            String inputString = scanner.nextLine();
-            if (pokemons.contains(inputString)) {
-                handCards.remove(this.getName());
-                pokemons.add(this.getName() + "〔" + inputString + "〕");
+            for (int i = 0; i < pokemons.size(); i++) {
+                System.out.print(i + "-" + pokemons.get(i).getName() + " ");
+            }
+            System.out.print("\n輸入序號 : ");
+            int inputInteger = Integer.parseInt(scanner.nextLine());
+            if (inputInteger < pokemons.size()) {
+                handCards.remove(CardEffectEnum.getByName(this.getName()));
+                energys.get(inputInteger).add(CardEffectEnum.getByName(this.getName()));
                 isNotExist = false;
             } else {
                 System.out.println(pokemons + "\n場上沒有此卡，請重新輸入");
             }
         }
-        return returnAll(handCards, deck, pokemons);
+        return returnAll(handCards, deck, pokemons, energys);
     }
 
-    public List<Object> pokemonEffect(LinkedList<String> handCards, Stack<String> deck, LinkedList<String> pokemons) {
-        handCards.remove(this.getName());
-        pokemons.add(this.getName());
-        return returnAll(handCards, deck, pokemons);
+    public List<Object> pokemonEffect(LinkedList<CardEffectEnum> handCards, Stack<CardEffectEnum> deck, LinkedList<CardEffectEnum> pokemons, LinkedList<List<CardEffectEnum>> energys) {
+        handCards.remove(CardEffectEnum.getByName(this.getName()));
+        return returnAll(handCards, deck, pokemons, energys);
     }
 
-    public List<Object> action(LinkedList<String> handCards, Stack<String> deck, LinkedList<String> pokemons) {
+    public List<Object> action(LinkedList<CardEffectEnum> handCards, Stack<CardEffectEnum> deck, LinkedList<CardEffectEnum> pokemons, LinkedList<List<CardEffectEnum>> energys) {
         return null;
     }
 
-    public List<Object> returnAll(LinkedList<String> handCards, Stack<String> deck, LinkedList<String> pokemons) {
+    public List<Object> returnAll(LinkedList<CardEffectEnum> handCards, Stack<CardEffectEnum> deck, LinkedList<CardEffectEnum> pokemons, LinkedList<List<CardEffectEnum>> energys) {
         return new ArrayList() {
             {
                 this.add(handCards);
                 this.add(deck);
                 this.add(pokemons);
+                this.add(energys);
             }
         };
     }
@@ -367,4 +402,12 @@ public enum CardEffectEnum {
     public void setType(String type) {
         this.type = type;
     }
+
+
+    @Override
+    public String toString() {
+        return this.getName();
+    }
+
 }
+

@@ -12,15 +12,17 @@ public class PtcgDeckController {
     private static int point = 0;
 
     /* 獎勵卡 */
-    private static Stack<String> prizeCards = new Stack<>();
+    private static Stack<CardEffectEnum> prizeCards = new Stack<>();
     /* 牌堆 */
-    private static Stack<String> deck = new Stack<>();
+    private static Stack<CardEffectEnum> deck = new Stack<>();
     /* 棄牌堆 */
-    private static Stack<String> discardPile = new Stack<>();
+    private static Stack<CardEffectEnum> discardPile = new Stack<>();
     /* 手牌 */
-    private static LinkedList<String> handCards = new LinkedList<>();
+    private static LinkedList<CardEffectEnum> handCards = new LinkedList<>();
     /* 場上所有pm */
-    private static LinkedList<String> pokemons = new LinkedList<>();
+    private static LinkedList<CardEffectEnum> pokemons = new LinkedList<>();
+    /* 能量 */
+    private static LinkedList<List<CardEffectEnum>> energys = new LinkedList<>();
 
 
     static int round = 1;
@@ -64,18 +66,17 @@ public class PtcgDeckController {
         DECK.put("老大", 1);
 
         //能量 - 14
-        DECK.put("電能", 4);
+        DECK.put("電能", 3);
         DECK.put("高速電能", 4);
         DECK.put("單位能量", 4);
-        DECK.put("超能", 2);
+        DECK.put("超能", 3);
     }
 
 
     public static void main(String[] args) {
         boolean needRestart = true;
         while (needRestart) {
-            if (handCards.contains("顫弦蠑螈v") || handCards.contains("破破袋") ||
-                    handCards.contains("垃垃藻") || handCards.contains("捷拉奧拉GX")) {
+            if (handCards.stream().anyMatch(e -> "PM-0".equals(e.getType()))) {
                 needRestart = false;
             } else {
                 handCards.clear();
@@ -89,9 +90,7 @@ public class PtcgDeckController {
             }
         }
 
-
-        boolean next = true;
-        while (next) {
+        while (deck.size() > 0) {
             System.out.println("\n【第" + round + "回合】 - 首填:" + isFirstEnergy + "  支援者:" + isUsedSupporter
                     + "  場地:" + area);
             Scanner scanner = new Scanner(System.in);
@@ -110,10 +109,10 @@ public class PtcgDeckController {
                 continue;
             } else if (inputString.contains("能")) {
                 isFirstEnergy = true;
-            } else if (inputString.equals("竹蘭") || inputString.equals("老大")
-                    || inputString.equals("博士") || inputString.equals("養鳥人")) {
+            } else if ("竹蘭".equals(inputString) || "老大".equals(inputString)
+                    || "博士".equals(inputString) || "養鳥人".equals(inputString)) {
                 isUsedSupporter = true;
-            } else if (inputString.equals("雷霆山") || inputString.equals("礦山")) {
+            } else if ("雷霆山".equals(inputString) || "礦山".equals(inputString)) {
                 area = inputString;
             }
 
@@ -122,22 +121,35 @@ public class PtcgDeckController {
             if (cee == null) {
                 System.out.println("手牌沒有此卡，請重新輸入");
                 System.out.println("==========================================================");
-                System.out.println("\n當前場上 : " + pokemons + "\n當前手牌 : " + handCards);
+                System.out.println("\n當前場上 : " + pokemons);
+                System.out.println("場上能量 : " + energys);
+                System.out.println("當前手牌 : " + handCards);
             } else {
-                List<Object> result = cee.action(handCards, deck, pokemons);
-                handCards = (LinkedList<String>) result.get(0);
-                deck = (Stack<String>) result.get(1);
-                pokemons = (LinkedList<String>) result.get(2);
+                List<Object> result = cee.action(handCards, deck, pokemons, energys);
+                handCards = (LinkedList<CardEffectEnum>) result.get(0);
+                deck = (Stack<CardEffectEnum>) result.get(1);
+                pokemons = (LinkedList<CardEffectEnum>) result.get(2);
+                energys = (LinkedList<List<CardEffectEnum>>) result.get(3);
                 System.out.println("==========================================================");
                 System.out.println("\n當前場上 : " + pokemons);
+                System.out.println("場上能量 : " + energys);
                 System.out.println("當前手牌 : " + handCards);
             }
 
         }
-
-
     }
 
+
+    /**
+     * 檢查使用的牌是否符合規則
+     *
+     * @param inputString 鍵盤輸入使用的牌
+     * @return 是否可以使用
+     */
+    private static boolean ruleCheck(String inputString) {
+
+        return false;
+    }
 
     /**
      * 計算起手率
@@ -175,8 +187,7 @@ public class PtcgDeckController {
     /**
      * 抽n張卡
      *
-     * @param deck 牌組
-     * @param num  抽牌數
+     * @param num 抽牌數
      * @return 剩餘牌組
      */
     private static void drawCards(int num) {
@@ -190,7 +201,6 @@ public class PtcgDeckController {
     /**
      * 洗牌
      *
-     * @param deck 牌堆
      * @return 洗牌後的牌堆
      */
     private static void shuffle() {
@@ -206,7 +216,7 @@ public class PtcgDeckController {
     private static void map2Stack(Map<String, Integer> map) {
         for (Map.Entry<String, Integer> e : map.entrySet()) {
             for (int i = 0; i < e.getValue(); i++) {
-                deck.push(e.getKey());
+                deck.push(CardEffectEnum.getByName(e.getKey()));
             }
         }
     }
