@@ -61,13 +61,13 @@ public class AutoPtcgDeckController {
 
 
     static {
-        //pm - 18
-        DECK.put("顫弦蠑螈v", 3);
+        //pm - 19
+        DECK.put("顫弦蠑螈v", 2);
         DECK.put("顫弦蠑螈vmax", 2);
         DECK.put("破破袋", 3);
         DECK.put("灰塵山", 3);
-        DECK.put("垃垃藻", 3);
-        DECK.put("毒藻龍", 3);
+        DECK.put("垃垃藻", 4);
+        DECK.put("毒藻龍", 4);
         DECK.put("捷拉奧拉GX", 1);
 
         //場地 - 3
@@ -75,6 +75,7 @@ public class AutoPtcgDeckController {
         DECK.put("礦山", 2);
 
         //物品 - 14
+        // TODO 新增能量傳輸x1 寶可夢捕捉器x2(希望能放4)
         DECK.put("先機球", 4);
         DECK.put("巢穴球", 4);
         DECK.put("通信", 2);
@@ -90,8 +91,8 @@ public class AutoPtcgDeckController {
         DECK.put("養鳥人", 2);
         DECK.put("老大", 1);
 
-        //能量 - 14
-        DECK.put("電能", 3);
+        //能量 - 13
+        DECK.put("電能", 2);
         DECK.put("高速電能", 4);
         DECK.put("單位能量", 4);
         DECK.put("超能", 3);
@@ -104,7 +105,7 @@ public class AutoPtcgDeckController {
      * @param args
      */
     public static void main(String[] args) {
-        for (int i = 0; i < 100000; i++) {
+        for (int i = 0; i < 10000; i++) {
             test4Loop();
 
             prizeCards = new Stack<>();
@@ -124,7 +125,7 @@ public class AutoPtcgDeckController {
 
     private static void printResult() {
         for (int i = 0; i < counts.length; i++) {
-            System.out.println("需要第_"+i+"_回合能做場成功的機率:" + 1.0*counts[i]/100000*100+"%");
+            System.out.println("需要第_"+i+"_回合能做場成功的機率:" + 1.0*counts[i]/10000*100+"%");
         }
     }
 
