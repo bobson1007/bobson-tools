@@ -36,37 +36,37 @@ public class PtcgDeckController {
 
 
     static {
-        //pm - 18
-        DECK.put("顫弦蠑螈v", 3);
+        //pm - 19
+        DECK.put("顫弦蠑螈v", 2);
         DECK.put("顫弦蠑螈vmax", 2);
-        DECK.put("破破袋", 3);
-        DECK.put("灰塵山", 3);
-        DECK.put("垃垃藻", 3);
-        DECK.put("毒藻龍", 3);
+        DECK.put("破破袋", 2);
+        DECK.put("灰塵山", 2);
+        DECK.put("垃垃藻", 4);
+        DECK.put("毒藻龍", 4);
         DECK.put("捷拉奧拉GX", 1);
 
         //場地 - 3
         DECK.put("雷霆山", 1);
         DECK.put("礦山", 2);
 
-        //物品 - 14
-        DECK.put("先機球", 4);
+        //物品 - 17
+        DECK.put("先機球", 3);
         DECK.put("巢穴球", 4);
         DECK.put("通信", 2);
         DECK.put("薰香", 2);
+        DECK.put("寶可夢捕捉器", 4);
         DECK.put("印章", 1);
         DECK.put("吹風機", 1);
 
         //裝備
 
-        //人物 - 11
+        //人物 - 12
         DECK.put("博士", 4);
         DECK.put("竹蘭", 4);
-        DECK.put("養鳥人", 2);
-        DECK.put("老大", 1);
+        DECK.put("瑪俐", 2);
+        DECK.put("老大", 2);
 
-        //能量 - 14
-        DECK.put("電能", 3);
+        //能量 - 11
         DECK.put("高速電能", 4);
         DECK.put("單位能量", 4);
         DECK.put("超能", 3);
@@ -108,6 +108,7 @@ public class PtcgDeckController {
                 isUsedSupporter = false;
                 System.out.println("==========================================================");
                 System.out.println("\n當前場上 : " + pokemons);
+                System.out.println("場上能量 : " + energys);
                 drawCards(1);
                 continue;
             } else if (inputString.contains("能")) {

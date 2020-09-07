@@ -212,6 +212,13 @@ public enum CardEffectEnum {
             return returnAll(handCards, deck, pokemons, energys);
         }
     },
+    POKEMON_CATCHER("寶可夢捕捉器", "2-物品") {
+        @Override
+        public List<Object> action(LinkedList<CardEffectEnum> handCards, Stack<CardEffectEnum> deck, LinkedList<CardEffectEnum> pokemons, LinkedList<List<CardEffectEnum>> energys) {
+            handCards.remove(CardEffectEnum.getByName(this.getName()));
+            return returnAll(handCards, deck, pokemons, energys);
+        }
+    },
 
 
     /**
@@ -220,6 +227,7 @@ public enum CardEffectEnum {
     PROFESSORS_RESEARCH("博士", "7-人物") {
         @Override
         public List<Object> action(LinkedList<CardEffectEnum> handCards, Stack<CardEffectEnum> deck, LinkedList<CardEffectEnum> pokemons, LinkedList<List<CardEffectEnum>> energys) {
+            handCards.remove(CardEffectEnum.getByName(this.getName()));
             handCards.clear();
             for (int i = 0; i < 7; i++) {
                 handCards.push(deck.pop());
@@ -230,6 +238,7 @@ public enum CardEffectEnum {
     CYNTHIA("竹蘭", "7-人物") {
         @Override
         public List<Object> action(LinkedList<CardEffectEnum> handCards, Stack<CardEffectEnum> deck, LinkedList<CardEffectEnum> pokemons, LinkedList<List<CardEffectEnum>> energys) {
+            handCards.remove(CardEffectEnum.getByName(this.getName()));
             handCards.forEach(deck::push);
             handCards.clear();
             Collections.shuffle(deck);
@@ -242,10 +251,10 @@ public enum CardEffectEnum {
     BIRDMAN("養鳥人", "7-人物") {
         @Override
         public List<Object> action(LinkedList<CardEffectEnum> handCards, Stack<CardEffectEnum> deck, LinkedList<CardEffectEnum> pokemons, LinkedList<List<CardEffectEnum>> energys) {
+            handCards.remove(CardEffectEnum.getByName(this.getName()));
             for (int i = 0; i < 3; i++) {
                 handCards.push(deck.pop());
             }
-            handCards.remove(CardEffectEnum.getByName(this.getName()));
             return returnAll(handCards, deck, pokemons, energys);
         }
     },
@@ -253,6 +262,21 @@ public enum CardEffectEnum {
         @Override
         public List<Object> action(LinkedList<CardEffectEnum> handCards, Stack<CardEffectEnum> deck, LinkedList<CardEffectEnum> pokemons, LinkedList<List<CardEffectEnum>> energys) {
             handCards.remove(CardEffectEnum.getByName(this.getName()));
+            return returnAll(handCards, deck, pokemons, energys);
+        }
+    },
+    MARNIE("瑪俐", "7-人物") {
+        @Override
+        public List<Object> action(LinkedList<CardEffectEnum> handCards, Stack<CardEffectEnum> deck, LinkedList<CardEffectEnum> pokemons, LinkedList<List<CardEffectEnum>> energys) {
+            handCards.remove(CardEffectEnum.getByName(this.getName()));
+            Stack<CardEffectEnum> stack = new Stack<>();
+            deck.forEach(stack::push);
+            handCards.forEach(stack::push);
+            deck.clear();
+            stack.forEach(deck::push);
+            for (int i = 0; i < 5; i++) {
+                handCards.push(deck.pop());
+            }
             return returnAll(handCards, deck, pokemons, energys);
         }
     },
@@ -407,7 +431,6 @@ public enum CardEffectEnum {
     public String toString() {
         return this.getName();
     }
-
 
 
 }
