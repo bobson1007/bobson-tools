@@ -74,6 +74,7 @@ public class PtcgDeckController {
 
     /**
      * 手動模擬出牌流程
+     *
      * @param args
      */
     public static void main(String[] args) {
@@ -114,7 +115,8 @@ public class PtcgDeckController {
             } else if (inputString.contains("能")) {
                 isFirstEnergy = true;
             } else if ("竹蘭".equals(inputString) || "老大".equals(inputString)
-                    || "博士".equals(inputString) || "養鳥人".equals(inputString)) {
+                    || "博士".equals(inputString) || "養鳥人".equals(inputString)
+                    || "瑪俐".equals(inputString)) {
                 isUsedSupporter = true;
             } else if ("雷霆山".equals(inputString) || "礦山".equals(inputString)) {
                 area = inputString;

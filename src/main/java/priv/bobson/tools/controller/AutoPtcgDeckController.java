@@ -104,37 +104,40 @@ public class AutoPtcgDeckController {
      * @param args
      */
     public static void main(String[] args) {
-//        for (int i = 0; i < 100000; i++) {
-//            test4Loop();
-//
-//            prizeCards = new Stack<>();
-//            deck = new Stack<>();
-//            discardPile = new Stack<>();
-//            handCards = new LinkedList<>();
-//            pokemons = new LinkedList<>();
-//            hasTrubbish = false;
-//            hasGarbodor = false;
-//            round = 1;
-//            isFirstEnergy = false;
-//            isUsedSupporter = false;
-//        }
-//        System.out.println("\n\n" + counts);
-//        printResult();
+        for (int i = 0; i < 100000; i++) {
+            test4Loop();
 
-        int total = 10000;
-        int[] array = new int[60];
-        for (int i = 0; i < total; i++) {
-            int count = startWithBasePokemon();
-            array[count]++;
             prizeCards = new Stack<>();
             deck = new Stack<>();
             discardPile = new Stack<>();
             handCards = new LinkedList<>();
             pokemons = new LinkedList<>();
+            hasTrubbish = false;
+            hasGarbodor = false;
+            round = 1;
+            isFirstEnergy = false;
+            isUsedSupporter = false;
         }
-        for (int i = 1; i < 11; i++) {
-            System.out.println("第" + i + "次起手才有基礎PM的機率:" + 1.0 * array[i] / total * 100 + "%");
-        }
+        System.out.println("\n\n" + counts);
+        printResult();
+
+
+        //==============================================================
+        //測試起手率
+//        int total = 10000;
+//        int[] array = new int[60];
+//        for (int i = 0; i < total; i++) {
+//            int count = startWithBasePokemon();
+//            array[count]++;
+//            prizeCards = new Stack<>();
+//            deck = new Stack<>();
+//            discardPile = new Stack<>();
+//            handCards = new LinkedList<>();
+//            pokemons = new LinkedList<>();
+//        }
+//        for (int i = 1; i < 11; i++) {
+//            System.out.println("第" + i + "次起手才有基礎PM的機率:" + 1.0 * array[i] / total * 100 + "%");
+//        }
     }
 
     private static void printResult() {
