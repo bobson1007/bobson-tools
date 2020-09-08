@@ -62,13 +62,13 @@ public class AutoPtcgDeckController {
 
     static {
         //pm - 17  (備用 : 蠑螈一組，破破袋一組)
-        DECK.put("顫弦蠑螈v", 0);
-        DECK.put("顫弦蠑螈vmax", 0);
-        DECK.put("破破袋", 4);
-        DECK.put("灰塵山", 0);
+        DECK.put("顫弦蠑螈v", 2);
+        DECK.put("顫弦蠑螈vmax", 2);
+        DECK.put("破破袋", 2);
+        DECK.put("灰塵山", 2);
         DECK.put("垃垃藻", 4);
-        DECK.put("毒藻龍", 9);
-        DECK.put("捷拉奧拉GX", 0);
+        DECK.put("毒藻龍", 4);
+        DECK.put("捷拉奧拉GX", 1);
 
         //場地 - 3
         DECK.put("雷霆山", 1);
