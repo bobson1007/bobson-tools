@@ -353,6 +353,13 @@ public enum CardEffectEnum {
     /**
      * 裝備
      */
+    COUNTER_GAIN("反擊增幅器","5-裝備"){
+        @Override
+        public List<Object> action(LinkedList<CardEffectEnum> handCards, Stack<CardEffectEnum> deck, LinkedList<CardEffectEnum> pokemons, LinkedList<List<CardEffectEnum>> energys) {
+            handCards.remove(CardEffectEnum.getByName(this.getName()));
+            return returnAll(handCards, deck, pokemons, energys);
+        }
+    },
 
 
     ;

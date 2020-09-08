@@ -61,7 +61,7 @@ public class AutoPtcgDeckController {
 
 
     static {
-        //pm - 19
+        //pm - 17  (備用 : 蠑螈一組，破破袋一組)
         DECK.put("顫弦蠑螈v", 2);
         DECK.put("顫弦蠑螈vmax", 2);
         DECK.put("破破袋", 2);
@@ -74,24 +74,24 @@ public class AutoPtcgDeckController {
         DECK.put("雷霆山", 1);
         DECK.put("礦山", 2);
 
-        //物品 - 17
+        //物品 - 16 (備用 : 先機球x1，交替x2，印章x1)
         DECK.put("先機球", 3);
         DECK.put("巢穴球", 4);
         DECK.put("通信", 2);
         DECK.put("薰香", 2);
         DECK.put("寶可夢捕捉器", 4);
-        DECK.put("印章", 1);
         DECK.put("吹風機", 1);
 
-        //裝備
+        //裝備 - 1 (備用 : 毒針)
+        DECK.put("反擊增幅器", 1);
 
-        //人物 - 12
+        //人物 - 12 (備用 : 養鳥人x2，瑪俐x2，老大x1 )
         DECK.put("博士", 4);
         DECK.put("竹蘭", 4);
         DECK.put("瑪俐", 2);
         DECK.put("老大", 2);
 
-        //能量 - 11
+        //能量 - 11 (備用 : 普電x5，極光x1 )
         DECK.put("高速電能", 4);
         DECK.put("單位能量", 4);
         DECK.put("超能", 3);
