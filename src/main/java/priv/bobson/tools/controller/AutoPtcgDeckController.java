@@ -62,13 +62,13 @@ public class AutoPtcgDeckController {
 
     static {
         //pm - 17  (備用 : 蠑螈一組，破破袋一組)
-        DECK.put("顫弦蠑螈v", 2);
-        DECK.put("顫弦蠑螈vmax", 2);
-        DECK.put("破破袋", 2);
-        DECK.put("灰塵山", 2);
+        DECK.put("顫弦蠑螈v", 0);
+        DECK.put("顫弦蠑螈vmax", 0);
+        DECK.put("破破袋", 4);
+        DECK.put("灰塵山", 0);
         DECK.put("垃垃藻", 4);
-        DECK.put("毒藻龍", 4);
-        DECK.put("捷拉奧拉GX", 1);
+        DECK.put("毒藻龍", 9);
+        DECK.put("捷拉奧拉GX", 0);
 
         //場地 - 3
         DECK.put("雷霆山", 1);
@@ -104,40 +104,41 @@ public class AutoPtcgDeckController {
      * @param args
      */
     public static void main(String[] args) {
-        for (int i = 0; i < 100000; i++) {
-            test4Loop();
-
-            prizeCards = new Stack<>();
-            deck = new Stack<>();
-            discardPile = new Stack<>();
-            handCards = new LinkedList<>();
-            pokemons = new LinkedList<>();
-            hasTrubbish = false;
-            hasGarbodor = false;
-            round = 1;
-            isFirstEnergy = false;
-            isUsedSupporter = false;
-        }
-        System.out.println("\n\n" + counts);
-        printResult();
-
-
-        //==============================================================
-        //測試起手率
-//        int total = 10000;
-//        int[] array = new int[60];
-//        for (int i = 0; i < total; i++) {
-//            int count = startWithBasePokemon();
-//            array[count]++;
+//        for (int i = 0; i < 100000; i++) {
+//            test4Loop();
+//
 //            prizeCards = new Stack<>();
 //            deck = new Stack<>();
 //            discardPile = new Stack<>();
 //            handCards = new LinkedList<>();
 //            pokemons = new LinkedList<>();
+//            hasTrubbish = false;
+//            hasGarbodor = false;
+//            round = 1;
+//            isFirstEnergy = false;
+//            isUsedSupporter = false;
 //        }
-//        for (int i = 1; i < 11; i++) {
-//            System.out.println("第" + i + "次起手才有基礎PM的機率:" + 1.0 * array[i] / total * 100 + "%");
-//        }
+//        System.out.println("\n\n" + counts);
+//        printResult();
+
+
+        //==============================================================
+//        測試起手率
+        int total = 10000;
+        int[] array = new int[60];
+        for (int i = 0; i < total; i++) {
+            int count = 0;
+            count = startWithBasePokemon();
+            array[count]++;
+            prizeCards = new Stack<>();
+            deck = new Stack<>();
+            discardPile = new Stack<>();
+            handCards = new LinkedList<>();
+            pokemons = new LinkedList<>();
+        }
+        for (int i = 1; i < 11; i++) {
+            System.out.println("第" + i + "次起手才有基礎PM的機率:" + 1.0 * array[i] / total * 100 + "%");
+        }
     }
 
     private static void printResult() {
@@ -339,7 +340,7 @@ public class AutoPtcgDeckController {
             }
             count++;
         }
-        return count-1;
+        return count - 1;
     }
 
     /**
