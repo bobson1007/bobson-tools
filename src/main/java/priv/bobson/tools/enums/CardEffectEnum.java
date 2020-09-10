@@ -270,9 +270,10 @@ public enum CardEffectEnum {
         public List<Object> action(LinkedList<CardEffectEnum> handCards, Stack<CardEffectEnum> deck, LinkedList<CardEffectEnum> pokemons, LinkedList<List<CardEffectEnum>> energys) {
             handCards.remove(CardEffectEnum.getByName(this.getName()));
             Stack<CardEffectEnum> stack = new Stack<>();
-            deck.forEach(stack::push);
             handCards.forEach(stack::push);
+            deck.forEach(stack::push);
             deck.clear();
+            handCards.clear();
             stack.forEach(deck::push);
             for (int i = 0; i < 5; i++) {
                 handCards.push(deck.pop());

@@ -49,7 +49,7 @@ public class PtcgDeckController {
         DECK.put("雷霆山", 1);
         DECK.put("礦山", 2);
 
-        //物品 - 16 (備用 : 先機球x1，交替x2，印章x1)
+        //物品 - 16 (備用 : 先機球x1，交替x4，印章x1)
         DECK.put("先機球", 3);
         DECK.put("巢穴球", 4);
         DECK.put("通信", 2);
@@ -61,9 +61,9 @@ public class PtcgDeckController {
         DECK.put("反擊增幅器", 1);
 
         //人物 - 12 (備用 : 養鳥人x2，瑪俐x2，老大x1 )
-        DECK.put("博士", 4);
+        DECK.put("博士", 3);
         DECK.put("竹蘭", 4);
-        DECK.put("瑪俐", 2);
+        DECK.put("瑪俐", 3);
         DECK.put("老大", 2);
 
         //能量 - 11 (備用 : 普電x5，極光x1 )
@@ -103,7 +103,7 @@ public class PtcgDeckController {
             if ("exit".equals(inputString)) {
                 System.out.println("測試結束");
                 return;
-            } else if ("n".equals(inputString)) {
+            } else if (".".equals(inputString)) {
                 round++;
                 isFirstEnergy = false;
                 isUsedSupporter = false;

@@ -74,7 +74,7 @@ public class AutoPtcgDeckController {
         DECK.put("雷霆山", 1);
         DECK.put("礦山", 2);
 
-        //物品 - 16 (備用 : 先機球x1，交替x2，印章x1)
+        //物品 - 16 (備用 : 先機球x1，交替x4，印章x1)
         DECK.put("先機球", 3);
         DECK.put("巢穴球", 4);
         DECK.put("通信", 2);
@@ -86,9 +86,9 @@ public class AutoPtcgDeckController {
         DECK.put("反擊增幅器", 1);
 
         //人物 - 12 (備用 : 養鳥人x2，瑪俐x2，老大x1 )
-        DECK.put("博士", 4);
+        DECK.put("博士", 3);
         DECK.put("竹蘭", 4);
-        DECK.put("瑪俐", 2);
+        DECK.put("瑪俐", 3);
         DECK.put("老大", 2);
 
         //能量 - 11 (備用 : 普電x5，極光x1 )
@@ -104,46 +104,46 @@ public class AutoPtcgDeckController {
      * @param args
      */
     public static void main(String[] args) {
-//        for (int i = 0; i < 100000; i++) {
-//            test4Loop();
-//
-//            prizeCards = new Stack<>();
-//            deck = new Stack<>();
-//            discardPile = new Stack<>();
-//            handCards = new LinkedList<>();
-//            pokemons = new LinkedList<>();
-//            hasTrubbish = false;
-//            hasGarbodor = false;
-//            round = 1;
-//            isFirstEnergy = false;
-//            isUsedSupporter = false;
-//        }
-//        System.out.println("\n\n" + counts);
-//        printResult();
+        for (int i = 0; i < 10000; i++) {
+            test4Loop();
 
-
-        //==============================================================
-//        測試起手率
-        int total = 10000;
-        int[] array = new int[60];
-        for (int i = 0; i < total; i++) {
-            int count = 0;
-            count = startWithBasePokemon();
-            array[count]++;
             prizeCards = new Stack<>();
             deck = new Stack<>();
             discardPile = new Stack<>();
             handCards = new LinkedList<>();
             pokemons = new LinkedList<>();
+            hasTrubbish = false;
+            hasGarbodor = false;
+            round = 1;
+            isFirstEnergy = false;
+            isUsedSupporter = false;
         }
-        for (int i = 1; i < 11; i++) {
-            System.out.println("第" + i + "次起手才有基礎PM的機率:" + 1.0 * array[i] / total * 100 + "%");
-        }
+        System.out.println("\n\n" + counts);
+        printResult();
+
+
+        //==============================================================
+//        測試起手率
+//        int total = 10000;
+//        int[] array = new int[60];
+//        for (int i = 0; i < total; i++) {
+//            int count = 0;
+//            count = startWithBasePokemon();
+//            array[count]++;
+//            prizeCards = new Stack<>();
+//            deck = new Stack<>();
+//            discardPile = new Stack<>();
+//            handCards = new LinkedList<>();
+//            pokemons = new LinkedList<>();
+//        }
+//        for (int i = 1; i < 11; i++) {
+//            System.out.println("第" + i + "次起手才有基礎PM的機率:" + 1.0 * array[i] / total * 100 + "%");
+//        }
     }
 
     private static void printResult() {
-        for (int i = 0; i < counts.length; i++) {
-            System.out.println("需要第_" + i + "_回合能做場成功的機率:" + 1.0 * counts[i] / 100000 * 100 + "%");
+        for (int i = 1; i < counts.length; i++) {
+            System.out.println("需要第_" + i + "_回合能做場成功的機率:" + 1.0 * counts[i] / 10000 * 100 + "%");
         }
     }
 
@@ -202,17 +202,20 @@ public class AutoPtcgDeckController {
 
 
     private static void useSupporter() {
+//        if (round == 1 ){
+//            return;
+//        }
         if (!isUsedSupporter) {
             List<Object> action = new ArrayList<>();
-            if (handCards.contains(CardEffectEnum.PROFESSORS_RESEARCH)) {
-                action = CardEffectEnum.PROFESSORS_RESEARCH.action(handCards, deck, pokemons, energys);
-                System.out.println("使用博士，新手牌 : " + handCards);
-            } else if (handCards.contains(CardEffectEnum.CYNTHIA)) {
+            if (handCards.contains(CardEffectEnum.CYNTHIA)) {
                 action = CardEffectEnum.CYNTHIA.action(handCards, deck, pokemons, energys);
                 System.out.println("使用竹蘭，新手牌 : " + handCards);
-            } else if (handCards.contains(CardEffectEnum.BIRDMAN)) {
-                action = CardEffectEnum.BIRDMAN.action(handCards, deck, pokemons, energys);
-                System.out.println("使用養鳥人，新手牌 : " + handCards);
+            } else if (handCards.contains(CardEffectEnum.PROFESSORS_RESEARCH)) {
+                action = CardEffectEnum.PROFESSORS_RESEARCH.action(handCards, deck, pokemons, energys);
+                System.out.println("使用博士，新手牌 : " + handCards);
+            } else if (handCards.contains(CardEffectEnum.MARNIE)) {
+                action = CardEffectEnum.MARNIE.action(handCards, deck, pokemons, energys);
+                System.out.println("使用瑪俐，新手牌 : " + handCards);
             }
             if (action.size() > 0) {
                 handCards = (LinkedList<CardEffectEnum>) action.get(0);
