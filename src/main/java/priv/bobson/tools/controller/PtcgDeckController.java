@@ -1,6 +1,7 @@
 package priv.bobson.tools.controller;
 
 import priv.bobson.tools.enums.CardEffectEnum;
+import priv.bobson.tools.ptcgcard.DeckSupplier;
 
 import java.util.*;
 
@@ -86,7 +87,7 @@ public class PtcgDeckController {
                 handCards.clear();
                 deck.clear();
                 prizeCards.clear();
-                init(DECK);
+                init(DeckSupplier.get(2));
                 if (deck == null) {
                     return;
                 }
@@ -120,6 +121,17 @@ public class PtcgDeckController {
                 isUsedSupporter = true;
             } else if ("雷霆山".equals(inputString) || "礦山".equals(inputString)) {
                 area = inputString;
+            } else if ("磁碟重載".equals(inputString)) {   //銀伴特性
+                System.out.println("使用磁碟重載");
+                while (handCards.size() < 5) {
+                    handCards.add(deck.pop());
+                }
+                continue;
+            } else if ("輸電".equals(inputString)) {   //逐電犬輸電
+                System.out.println("使用輸電");
+                deck.remove(CardEffectEnum.LIGBTNING_ENGERGY);
+                deck.remove(CardEffectEnum.LIGBTNING_ENGERGY);
+                continue;
             }
 
 

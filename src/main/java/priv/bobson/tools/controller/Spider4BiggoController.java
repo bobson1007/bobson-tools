@@ -17,14 +17,17 @@ public class Spider4BiggoController {
 
     private static Map<String, Set<Commodity>> map1 = new HashMap<>();
     private static Map<String, Set<Commodity>> map2 = new HashMap<>();
+    private static Map<String, Set<Commodity>> map3 = new HashMap<>();
     private static final int PAGE_NUMBER = 100;
 
 
     public static void main(String[] args) {
-        map1 = Spider4BiggoController.loop4All("PTCG 毒藻龍");
-        map2 = Spider4BiggoController.loop4All("PTCG 巢穴球");
+        map1 = Spider4BiggoController.loop4All("銀伴戰獸");
+        map2 = Spider4BiggoController.loop4All("銀伴戰獸");
+        map3 = Spider4BiggoController.loop4All("洛茲");
+
         map2.forEach((key, value) -> {
-            if (map1.containsKey(key)) {
+            if (map1.containsKey(key) && map3.containsKey(key)) {
                 printDetail(key);
             }
         });
@@ -66,6 +69,9 @@ public class Spider4BiggoController {
             System.out.println(e.getKeyword() + " " + e.getPrice() + "元 : " + e.getLink() + "   " + e.getName());
         });
         map2.get(shop).forEach(e -> {
+            System.out.println(e.getKeyword() + " " + e.getPrice() + "元 : " + e.getLink() + "   " + e.getName());
+        });
+        map3.get(shop).forEach(e -> {
             System.out.println(e.getKeyword() + " " + e.getPrice() + "元 : " + e.getLink() + "   " + e.getName());
         });
         System.out.println();
