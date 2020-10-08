@@ -124,36 +124,39 @@ public class DeckSupplier implements Supplier<Map> {
      * 雷公ar + 逐電犬v + 多邊獸z
      */
     private static void init3() {
-        //PM - 16
+        //PM - 15
         deck.put("雷公ar", 3);
         deck.put("基拉祈", 3);
-        deck.put("多邊獸", 3);
-        deck.put("多邊獸z", 3);
-        deck.put("逐電犬v", 1);
-        deck.put("花舞鳥GX", 1);
+        deck.put("多邊獸", 2);
+        deck.put("多邊獸2", 1);
+        deck.put("多邊獸z", 2);
+        deck.put("屬性空", 2);
+        deck.put("銀伴戰獸GX", 2);
 
         //場地 - 1
         deck.put("雷霆山", 1);
 
         //物品 - 17
         deck.put("先機球", 4);
+        deck.put("巢穴球", 1);
         deck.put("通信", 2);
         deck.put("薰香", 2);
         deck.put("交替", 3);
-        deck.put("神奇糖果", 3);
-        deck.put("電氣力量", 4);
+        deck.put("神奇糖果", 2);
+        deck.put("電氣力量", 2);
+        deck.put("救援擔架", 1);
 
         //道具 - 2
         deck.put("逃脫滑板", 2);
 
-        //人物 - 10
+        //人物 - 11
         deck.put("竹蘭", 4);
         deck.put("瑪俐", 3);
         deck.put("養鳥人", 2);
         deck.put("老大", 2);
 
         //能量 - 14
-        deck.put("電能", 2);
+        deck.put("草能", 2);
         deck.put("高速電能", 4);
         deck.put("單位能量", 4);
         deck.put("極光能量", 4);

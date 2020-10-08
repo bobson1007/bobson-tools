@@ -465,6 +465,18 @@ public enum CardEffectEnum {
             return energyEffect(handCards, deck, pokemons, energys);
         }
     },
+    GRASS_ENGERGY("草能", "6-能量") {
+        @Override
+        public List<Object> action(LinkedList<CardEffectEnum> handCards, Stack<CardEffectEnum> deck, LinkedList<CardEffectEnum> pokemons, LinkedList<List<CardEffectEnum>> energys) {
+            return energyEffect(handCards, deck, pokemons, energys);
+        }
+    },
+    METAL_ENGERGY("鋼能", "6-能量") {
+        @Override
+        public List<Object> action(LinkedList<CardEffectEnum> handCards, Stack<CardEffectEnum> deck, LinkedList<CardEffectEnum> pokemons, LinkedList<List<CardEffectEnum>> energys) {
+            return energyEffect(handCards, deck, pokemons, energys);
+        }
+    },
 
 
     /**
