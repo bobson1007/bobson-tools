@@ -119,6 +119,52 @@ public enum CardEffectEnum {
             return pokemonEffect(handCards, deck, pokemons, energys);
         }
     },
+    ORICORIO_GX("花舞鳥GX", "1-PM-0") {
+        @Override
+        public List<Object> action(LinkedList<CardEffectEnum> handCards, Stack<CardEffectEnum> deck, LinkedList<CardEffectEnum> pokemons, LinkedList<List<CardEffectEnum>> energys) {
+            pokemons.add(this);
+            energys.add(new ArrayList<>());
+            return pokemonEffect(handCards, deck, pokemons, energys);
+        }
+    },
+    RAIKOU_AR("雷公ar", "1-PM-0") {
+        @Override
+        public List<Object> action(LinkedList<CardEffectEnum> handCards, Stack<CardEffectEnum> deck, LinkedList<CardEffectEnum> pokemons, LinkedList<List<CardEffectEnum>> energys) {
+            pokemons.add(this);
+            energys.add(new ArrayList<>());
+            return pokemonEffect(handCards, deck, pokemons, energys);
+        }
+    },
+    JIRACHI("基拉祈", "1-PM-0") {
+        @Override
+        public List<Object> action(LinkedList<CardEffectEnum> handCards, Stack<CardEffectEnum> deck, LinkedList<CardEffectEnum> pokemons, LinkedList<List<CardEffectEnum>> energys) {
+            pokemons.add(this);
+            energys.add(new ArrayList<>());
+            return pokemonEffect(handCards, deck, pokemons, energys);
+        }
+    },
+    PORYGON("多邊獸", "1-PM-0") {
+        @Override
+        public List<Object> action(LinkedList<CardEffectEnum> handCards, Stack<CardEffectEnum> deck, LinkedList<CardEffectEnum> pokemons, LinkedList<List<CardEffectEnum>> energys) {
+            pokemons.add(this);
+            energys.add(new ArrayList<>());
+            return pokemonEffect(handCards, deck, pokemons, energys);
+        }
+    },
+    PORYGON_ZAP("多邊獸z", "3-PM-1") {
+        @Override
+        public List<Object> action(LinkedList<CardEffectEnum> handCards, Stack<CardEffectEnum> deck, LinkedList<CardEffectEnum> pokemons, LinkedList<List<CardEffectEnum>> energys) {
+            for (int i = 0; i < pokemons.size(); i++) {
+                if ("多邊獸".equals(pokemons.get(i).getName())) {
+                    pokemons.remove(i);
+                    pokemons.add(i, this);
+                    break;
+                }
+            }
+            return pokemonEffect(handCards, deck, pokemons, energys);
+        }
+    },
+
 
 
     /**
@@ -189,7 +235,6 @@ public enum CardEffectEnum {
                 System.out.print("選擇手牌一張PM : ");
                 String inputString = scanner.nextLine();
                 if (handCards.contains(CardEffectEnum.getByName(inputString))) {
-                    handCards.remove(CardEffectEnum.getByName(this.getName()));
                     handCards.remove(CardEffectEnum.getByName(inputString));
                     deck.push(CardEffectEnum.getByName(inputString));
                     isNotExist = false;
@@ -272,6 +317,13 @@ public enum CardEffectEnum {
         }
     },
     SWITCH("交替", "2-物品") {
+        @Override
+        public List<Object> action(LinkedList<CardEffectEnum> handCards, Stack<CardEffectEnum> deck, LinkedList<CardEffectEnum> pokemons, LinkedList<List<CardEffectEnum>> energys) {
+            handCards.remove(CardEffectEnum.getByName(this.getName()));
+            return returnAll(handCards, deck, pokemons, energys);
+        }
+    },
+    RARE_CANDY("神奇糖果", "2-物品") {
         @Override
         public List<Object> action(LinkedList<CardEffectEnum> handCards, Stack<CardEffectEnum> deck, LinkedList<CardEffectEnum> pokemons, LinkedList<List<CardEffectEnum>> energys) {
             handCards.remove(CardEffectEnum.getByName(this.getName()));
@@ -395,6 +447,24 @@ public enum CardEffectEnum {
             return energyEffect(handCards, deck, pokemons, energys);
         }
     },
+    AURORA_ENERGY("極光能量", "6-能量") {
+        @Override
+        public List<Object> action(LinkedList<CardEffectEnum> handCards, Stack<CardEffectEnum> deck, LinkedList<CardEffectEnum> pokemons, LinkedList<List<CardEffectEnum>> energys) {
+            boolean isNotExist = true;
+            while (isNotExist) {
+                Scanner scanner = new Scanner(System.in);
+                System.out.print("棄一張手牌 : ");
+                String inputString = scanner.nextLine();
+                if (handCards.contains(CardEffectEnum.getByName(inputString))) {
+                    handCards.remove(CardEffectEnum.getByName(this.getName()));
+                    isNotExist = false;
+                } else {
+                    System.out.println(handCards + "\n手牌沒有此卡，請重新輸入");
+                }
+            }
+            return energyEffect(handCards, deck, pokemons, energys);
+        }
+    },
 
 
     /**
@@ -420,6 +490,20 @@ public enum CardEffectEnum {
      * 裝備
      */
     COUNTER_GAIN("反擊增幅器","5-裝備"){
+        @Override
+        public List<Object> action(LinkedList<CardEffectEnum> handCards, Stack<CardEffectEnum> deck, LinkedList<CardEffectEnum> pokemons, LinkedList<List<CardEffectEnum>> energys) {
+            handCards.remove(CardEffectEnum.getByName(this.getName()));
+            return returnAll(handCards, deck, pokemons, energys);
+        }
+    },
+    EAR_RINGING_BELL("耳鳴鈴鐺","5-裝備"){
+        @Override
+        public List<Object> action(LinkedList<CardEffectEnum> handCards, Stack<CardEffectEnum> deck, LinkedList<CardEffectEnum> pokemons, LinkedList<List<CardEffectEnum>> energys) {
+            handCards.remove(CardEffectEnum.getByName(this.getName()));
+            return returnAll(handCards, deck, pokemons, energys);
+        }
+    },
+    ESCAPE_BOARD("逃脫滑板","5-裝備"){
         @Override
         public List<Object> action(LinkedList<CardEffectEnum> handCards, Stack<CardEffectEnum> deck, LinkedList<CardEffectEnum> pokemons, LinkedList<List<CardEffectEnum>> energys) {
             handCards.remove(CardEffectEnum.getByName(this.getName()));

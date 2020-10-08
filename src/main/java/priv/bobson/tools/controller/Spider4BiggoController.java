@@ -22,9 +22,9 @@ public class Spider4BiggoController {
 
 
     public static void main(String[] args) {
-        map1 = Spider4BiggoController.loop4All("銀伴戰獸");
-        map2 = Spider4BiggoController.loop4All("銀伴戰獸");
-        map3 = Spider4BiggoController.loop4All("洛茲");
+        map1 = Spider4BiggoController.loop4All("雷公 ar");
+        map2 = Spider4BiggoController.loop4All("雷公 ar");
+        map3 = Spider4BiggoController.loop4All("基拉祈");
 
         map2.forEach((key, value) -> {
             if (map1.containsKey(key) && map3.containsKey(key)) {

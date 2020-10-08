@@ -87,17 +87,17 @@ public class PtcgDeckController {
                 handCards.clear();
                 deck.clear();
                 prizeCards.clear();
-                init(DeckSupplier.get(2));
+                init(DeckSupplier.get(3));
                 if (deck == null) {
                     return;
                 }
-                drawCards(7);
+                drawCards(8);
             }
         }
 
         while (deck.size() > 0) {
             System.out.println("\n【第" + round + "回合】 - 首填:" + isFirstEnergy + "  支援者:" + isUsedSupporter
-                    + "  場地:" + area);
+                    + "  場地:" + area + "");
             Scanner scanner = new Scanner(System.in);
             System.out.print("使用手牌 : ");
             String inputString = scanner.nextLine();
@@ -132,6 +132,30 @@ public class PtcgDeckController {
                 deck.remove(CardEffectEnum.LIGBTNING_ENGERGY);
                 deck.remove(CardEffectEnum.LIGBTNING_ENGERGY);
                 continue;
+            } else if ("許願".equals(inputString)) {
+                System.out.println("使用許願");
+                Stack<CardEffectEnum> stack = new Stack<>();
+                for (int i = 5; i > 0; i--) {
+                    stack.push(deck.pop());
+                }
+                System.out.println("選擇一張:" + stack);
+                boolean isNotExist = true;
+                while (isNotExist) {
+                    Scanner scanner2 = new Scanner(System.in);
+                    String inputString2 = scanner2.nextLine();
+                    if (stack.contains(CardEffectEnum.getByName(inputString2))) {
+                        stack.remove(CardEffectEnum.getByName(inputString2));
+                        handCards.add(CardEffectEnum.getByName(inputString2));
+                        while (stack.size()>0){
+                            deck.push(stack.pop());
+                        }
+                        shuffle();
+                        isNotExist = false;
+                        System.out.println("當前手牌:"+handCards);
+                    } else {
+                        System.out.println(handCards + "\n手牌沒有此卡，請重新輸入");
+                    }
+                }
             }
 
 
